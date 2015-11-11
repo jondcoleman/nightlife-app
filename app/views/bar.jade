@@ -1,0 +1,17 @@
+each val in results.businesses
+    .bar.group
+        .bar-img-con
+            img.bar-img(src= val.image_url )
+        .bar-right
+            .bar-title-row
+                .bar-title
+                    h4= val.name
+                .bar-rating
+                    img.rating(src= val.rating_img_url)
+            .snippet-con
+                .bar-snippet 
+                    p= val.snippet_text
+                .going
+                    .going-count 17 going
+                    a(href='/auth/github/callback')
+                        .btn.btn-primary(id= val.id + '-button') I'm In

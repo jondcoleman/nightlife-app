@@ -1,0 +1,12 @@
+extends ./layout.jade
+
+block content
+    .container
+      .login
+        img(src='/public/img/clementine_150.png')
+        br
+        p.clementine-text Clementine.js
+        a(href='/auth/github/callback')
+          #login-btn.btn
+            img(src='/public/img/github_32px.png', alt='github logo')
+            p LOGIN WITH GITHUB

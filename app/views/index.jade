@@ -1,0 +1,27 @@
+extends ./layout.jade
+
+block headerContent
+    .text-vertical-center
+      h1 Vida Nocturna
+      h3 Coordinate with Friends for A Great Night
+      br
+      a.btn.btn-dark.btn-lg(href='#GetStarted') Get Started
+      br
+      br
+      #login-btn-con
+        a.btn.btn-dark.btn-lg(href='/auth/github/callback') Login
+
+block content
+    .container
+        .row
+            a(name='GetStarted')
+            form#location-search
+                .input-field.col.m6.offset-m3.location-search
+                    input#location-input.validate(placeholder='Location', type='text', required='', aria-required='true' name='location')
+                    button#location-search-btn.btn.search-btn(type='submit', value='Submit') Search
+        .row.bars-con
+            #bars.bars
+        
+block bottomScripts
+    script(src='controllers/clientController.js')
+    script(src='controllers/userController.client.js')

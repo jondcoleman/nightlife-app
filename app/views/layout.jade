@@ -1,0 +1,36 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    meta(name='description', content='')
+    meta(name='author', content='')
+    title Vida Nocturna
+    // Bootstrap Core CSS
+    //link(href='public/css/bootstrap.min.css', rel='stylesheet')
+    // Custom CSS
+    link(href='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/css/materialize.min.css', rel='stylesheet')
+    link(href='public/css/stylish-portfolio.css', rel='stylesheet')
+    link(href='public/css/main.css', rel='stylesheet')
+    // Custom Fonts
+    link(href='public/font-awesome/css/font-awesome.min.css', rel='stylesheet', type='text/css')
+    link(href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700,300italic,400italic,700italic', rel='stylesheet', type='text/css')
+    
+    block headContent
+    
+  body
+
+    header#top.header
+        block headerContent
+        
+    block content
+    script(type='text/javascript', src='/common/ajax-functions.js')
+    // jQuery
+    script(src='public/js/jquery.js')
+    // Bootstrap Core JavaScript
+    //script(src='public/js/bootstrap.min.js')
+    // Custom Theme JavaScript
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.2/js/materialize.min.js')
+    
+    block bottomScripts

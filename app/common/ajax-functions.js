@@ -1,3 +1,5 @@
+var appUrl = 'https://nightlife-app-jondcoleman.c9users.io/';
+
 var ajaxFunctions = {
    ready: function ready (fn) {
       if (typeof fn !== 'function') {
