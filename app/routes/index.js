@@ -3,15 +3,7 @@
 var path = process.cwd();
 
 var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
-
-var randomString = function(length) {
-    var text = "";
-    var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-    for(var i = 0; i < length; i++) {
-        text += possible.charAt(Math.floor(Math.random() * possible.length));
-    }
-    return text;
-}
+var BarHandler = require(path + '/app/controllers/barHandler.server.js');
 
 /* require the modules needed */
 var oauthSignature = require('oauth-signature');  
@@ -93,6 +85,7 @@ module.exports = function (app, passport) {
     }
     
     var clickHandler = new ClickHandler();
+    var barHandler = new BarHandler();
 
     app.route('/')
         .get(function (req, res) {
@@ -119,15 +112,29 @@ module.exports = function (app, passport) {
     app.route('/api/getUser')
         .get(function (req, res) {
             if(req.user !== undefined){
-                res.json(req.user.github);
+                res.json(req.user);
             }
-        });    
+        });
+    
+    app.route('/api/visit/:barID')
+        .get(function(req, res) {
+            barHandler.addVisit(req.params.barID, req.user._id);
+            res.send('done');
+        });
     
     app.route('/api/yelp/:location')
         .get(function(req, res) {
             request_yelp(req.params.location, function(error, response, body){
                 var json = JSON.parse(body)
                 res.render('bar', {results: json});
+                if(req.user !== undefined){
+                    var User = require('../models/users');
+                    var query = {_id: req.user._id};
+                    User.update(query, {lastSearch: req.params.location}, {}, function(err, raw){
+                    console.log('The raw response from Mongo was ', raw);  
+                })
+                }
+                
             })
     })
 

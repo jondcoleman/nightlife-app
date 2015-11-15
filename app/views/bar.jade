@@ -13,5 +13,4 @@ each val in results.businesses
                     p= val.snippet_text
                 .going
                     .going-count 17 going
-                    a(href='/auth/github/callback')
-                        .btn.btn-primary(id= val.id + '-button') I'm In
+                    .btn.bar-button(id= val.id) I'm In
