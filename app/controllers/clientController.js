@@ -1,4 +1,5 @@
 $(document).ready(function(){
+   var appUrl = 'https://nightlife-app-jondcoleman.c9users.io/';    
    var apiUrl = appUrl + 'api/getUser';
    
    $.get(apiUrl, function(data){

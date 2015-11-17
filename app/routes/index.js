@@ -2,7 +2,6 @@
 
 var path = process.cwd();
 
-var ClickHandler = require(path + '/app/controllers/clickHandler.server.js');
 var BarHandler = require(path + '/app/controllers/barHandler.server.js');
 var UserHandler = require(path + '/app/controllers/userHandler.server.js');
 
@@ -77,15 +76,6 @@ var request_yelp = function(location, callback) {
 
 module.exports = function (app, passport) {
     
-    function isLoggedIn (req, res, next) {
-        if (req.isAuthenticated()) {
-            return next();
-        } else {
-            res.redirect('/login');
-        }
-    }
-    
-    var clickHandler = new ClickHandler();
     var barHandler = new BarHandler();
     var userHandler = new UserHandler();
     var Bar = require('../models/bars.js');
@@ -95,22 +85,11 @@ module.exports = function (app, passport) {
             res.render('index');
         });
         
-    app.route('/login')
-        .get(function (req, res) {
-            res.render('login');
-        });
-        
     app.route('/logout')
         .get(function (req, res) {
             req.logout();
             res.redirect('/');
         });
-        
-    app.route('/profile')
-        .get(isLoggedIn, function (req, res) {
-            res.render('profile');
-        });
-        
         
     app.route('/api/getUser')
         .get(function (req, res) {
@@ -173,10 +152,5 @@ module.exports = function (app, passport) {
                 state: req.query.location
             })(req, res, next)
     })
-    
-    app.route('/api/:id/clicks')
-        .get(isLoggedIn, clickHandler.getClicks)
-        .post(isLoggedIn, clickHandler.addClick)
-        .delete(isLoggedIn, clickHandler.resetClicks);
         
 }
