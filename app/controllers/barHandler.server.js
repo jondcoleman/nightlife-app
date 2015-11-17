@@ -42,21 +42,12 @@ function BarHandler () {
             );
     };
     
-    this.getAllBars = function () {
-        var allBars
-        Bar
-            .find({}, function(err, bars){
-                if (err) {throw err}
-                allBars = bars;
-                console.log(allBars);
-                returnAllBars(allBars);
-            })
-        function returnAllBars(val) {
-            return val;
-        }
-        
-    }
-            
+    this.getAllBars = function (callback) {
+        Bar.find({}, function(err, docs){
+            if (err)  {throw err}
+            callback(docs);
+        })
+    }        
 
 };
 

@@ -39,12 +39,6 @@ module.exports = function (app, passport) {
     
     app.route('/api/yelp/:location')
         .get(function(req, res) {
-            var allBars;
-            Bar.find({}, function(err, docs){
-                if (err)  {throw err}
-                allBars = docs;
-                yelpCall(allBars);
-            })
             var yelpCall = function(allBars){
                 var location = req.params.location;
                 Yelp(location, function(error, response, body){
@@ -71,7 +65,7 @@ module.exports = function (app, passport) {
                     }
             })
             }
-            
+            barHandler.getAllBars(yelpCall);
 
     })
 
