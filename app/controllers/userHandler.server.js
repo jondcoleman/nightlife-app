@@ -4,26 +4,31 @@ var Users = require('../models/users.js');
 
 function UserHandler () {
 
-    this.addUserVisits = function (req, res) {
+    this.addOrRemoveUserVisit = function (req, res) {
         Users
-            .findByIdAndUpdate(req.user._id, { $inc: { 'nbrClicks.clicks': 1 } })
-            .exec(function (err, result) {
-                    if (err) { throw err; }
+            .findOne({'_id': req.user._id, 'barsVisiting': req.params.barID})
+            .exec(function (err, result){
+                if (err) { throw err; }
+                if (result) {
+                    console.log(result);
+                    Users.update({'_id': req.user._id}, { $pull: { 'barsVisiting': req.params.barID }})
+                    .exec(function (err, result) {
+                        if (err) { throw err; }
+                        console.log('removed');
+                        console.log(result);
+                    })
+                } else {
+                    Users.update({'_id': req.user._id}, { $push: { 'barsVisiting': req.params.barID }})
+                    .exec(function (err, result) {
+                        if (err) { throw err; }
+                        console.log('added');
+                        console.log(result);
+                        
+                    })
                 }
-            );
-    };
-
-    this.removeUserVisits = function (req, res) {
-        Users
-            .findOneAndUpdate({ 'github.id': req.user.github.id }, { 'nbrClicks.clicks': 0 })
-            .exec(function (err, result) {
-                    if (err) { throw err; }
-
-                    res.json(result.nbrClicks);
-                }
-            );
+            })
     };
 
 };
 
-module.exports = BarHandler;
+module.exports = UserHandler;

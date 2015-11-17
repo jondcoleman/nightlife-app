@@ -6,8 +6,8 @@ var Bar = require('../models/bars.js');
 function BarHandler () {
 
     this.addVisit = function (barID, userID) {
-        var today = Moment().startOf('day')
-        var tomorrow = Moment(today).add(1, 'days')
+        // var today = Moment().startOf('day')
+        // var tomorrow = Moment(today).add(1, 'days')
         
         
         Bar
@@ -41,6 +41,22 @@ function BarHandler () {
                 }
             );
     };
+    
+    this.getAllBars = function () {
+        var allBars
+        Bar
+            .find({}, function(err, bars){
+                if (err) {throw err}
+                allBars = bars;
+                console.log(allBars);
+                returnAllBars(allBars);
+            })
+        function returnAllBars(val) {
+            return val;
+        }
+        
+    }
+            
 
 };
 

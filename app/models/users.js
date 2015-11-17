@@ -11,10 +11,7 @@ var User = new Schema({
         publicRepos: Number
     },
    lastSearch: String,
-   barsVisiting: [{
-       date: Date,
-       barID: String
-   }]
+   barsVisiting: [String]
 });
 
 module.exports = mongoose.model('User', User);

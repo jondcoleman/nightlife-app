@@ -1,4 +1,4 @@
-each val in results.businesses
+each val in results
     .bar.group
         .bar-img-con
             img.bar-img(src= val.image_url )
@@ -12,5 +12,14 @@ each val in results.businesses
                 .bar-snippet 
                     p= val.snippet_text
                 .going
-                    .going-count 17 going
-                    .btn.bar-button(id= val.id) I'm In
+                    .going-count
+                        span.visitor-count(id= val.id) #{val.visitorCount}
+                        span  going
+                    if !user
+                        a.btn.modal-trigger.bar-button(href='#modal1') I'm In
+                    else 
+                        if user.barsVisiting.indexOf(val.id) < 0
+                            .btn.bar-button.logged-in(id= val.id) I'm In
+                        else 
+                            .btn.bar-button.logged-in.red(id= val.id) I'm In
+                    

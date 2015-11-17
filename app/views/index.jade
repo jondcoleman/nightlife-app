@@ -9,7 +9,7 @@ block headerContent
       br
       br
       #login-btn-con
-        a.btn.btn-dark.btn-lg(href='/auth/github/callback') Login
+        .btn.btn-dark.btn-lg.login-button Login
 
 block content
     .container
@@ -22,6 +22,15 @@ block content
         .row.bars-con
             #bars.bars
         
+        
+    // Modal Structure
+    #modal1.modal
+      .modal-content
+        h4 Login
+        p Please login to choose your venues.
+      .modal-footer
+        #login-btn-con
+            .btn.btn-dark.btn-lg.login-button Login
 block bottomScripts
     script(src='controllers/clientController.js')
     script(src='controllers/userController.client.js')

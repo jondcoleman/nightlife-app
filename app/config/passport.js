@@ -8,7 +8,7 @@ module.exports = function (passport) {
     passport.serializeUser(function (user, done) {
         done(null, user.id);
     });
-
+    
     passport.deserializeUser(function (id, done) {
         User.findById(id, function (err, user) {
             done(err, user);
@@ -18,9 +18,10 @@ module.exports = function (passport) {
     passport.use(new GitHubStrategy({
         clientID: configAuth.gitHubAuth.clientID,
         clientSecret: configAuth.gitHubAuth.clientSecret,
-        callbackURL: configAuth.gitHubAuth.callbackURL
+        callbackURL: configAuth.gitHubAuth.callbackURL,
+        passReqToCallback: true
     },
-    function (token, refreshToken, profile, done) {
+    function (req, token, refreshToken, profile, done) {
         process.nextTick(function () {
             User.findOne({ 'github.id': profile.id }, function (err, user) {
                 if (err) {
@@ -36,7 +37,13 @@ module.exports = function (passport) {
                     newUser.github.username = profile.username;
                     newUser.github.displayName = profile.displayName;
                     newUser.github.publicRepos = profile._json.public_repos;
-                    newUser.lastSearch = '';
+                    console.log(req.query.state);
+                    if (req.query.state === undefined){
+                        newUser.lastSearch = ""
+                    } else {
+                        newUser.lastSearch = req.query.state;    
+                    }
+                    
 
                     newUser.save(function (err) {
                         if (err) {
