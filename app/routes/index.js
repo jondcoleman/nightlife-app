@@ -39,33 +39,14 @@ module.exports = function (app, passport) {
     
     app.route('/api/yelp/:location')
         .get(function(req, res) {
-            var yelpCall = function(allBars){
-                var location = req.params.location;
-                Yelp(location, function(error, response, body){
-                    var json = JSON.parse(body)
-                    json.businesses.forEach(function(val, index, array){
-                        array[index].visitorCount = 0;
-                        allBars.forEach(function(v, i, a){
-                            if (val.id === v.yelpBarID) {
-                                array[index].visitorCount = v.visitors.length;
-                                //console.log(array[index])
-                            }
-                        })
-                    })
-                    var businesses = json.businesses;
-                    businesses.sort();
-                    res.render('bar', {results: businesses, allBars: allBars, user: req.user});
-                    if(req.user !== undefined){
-                        var User = require('../models/users');
-                        var query = {_id: req.user._id};
-                        User.update(query, {lastSearch: location}, {}, function(err, raw){
-                            if (err) {throw err}
-                            console.log('The raw response from Mongo was ', raw);  
-                    })
-                    }
-            })
+            barHandler.sendBars(req, res, function(businesses, allBars, user){
+                res.render('bar', {results: businesses, allBars: allBars, user: req.user});
+            });
+
+            //save user search
+            if(req.user !== undefined){
+                userHandler.saveSearch(req.user, req.params.location);
             }
-            barHandler.getAllBars(yelpCall);
 
     })
 

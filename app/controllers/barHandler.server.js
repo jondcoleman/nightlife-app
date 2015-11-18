@@ -2,6 +2,7 @@
 
 var Moment = require('moment');
 var Bar = require('../models/bars.js');
+var Yelp = require('./yelp.js');
 
 function BarHandler () {
 
@@ -47,8 +48,33 @@ function BarHandler () {
             if (err)  {throw err}
             callback(docs);
         })
-    }        
-
+    };        
+    
+    
+    this.sendBars = function (req, res, callback) {
+        var location = req.params.location;
+        var user = req.user;
+        
+        var yelpCall = function(allBars){
+            Yelp(location, function(body){
+                var businesses = JSON.parse(body).businesses;
+                
+                //add visitor count
+                businesses.forEach(function(val, index, array){
+                    array[index].visitorCount = 0;
+                    allBars.forEach(function(v, i, a){
+                        if (val.id === v.yelpBarID) {
+                            array[index].visitorCount = v.visitors.length;
+                        }
+                    })
+                })
+                
+                businesses.sort();
+                callback(businesses, allBars, user);
+            })
+        }
+        this.getAllBars(yelpCall);
+    }
 };
 
 module.exports = BarHandler;

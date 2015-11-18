@@ -28,6 +28,14 @@ function UserHandler () {
                 }
             })
     };
+    
+    this.saveSearch = function (user, location) {
+        Users
+            .update({_id: user._id}, {lastSearch: location}, {}, function(err, raw){
+                if (err) {throw err}
+                    console.log('The raw response from Mongo was ', raw);  
+                })
+    }
 
 };
 
