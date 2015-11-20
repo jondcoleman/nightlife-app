@@ -1,6 +1,6 @@
 $(document).ready(function(){
-   var appUrl = window.location.origin;    
-   var apiUrl = window.location.origin + 'api/getUser';
+   var appUrl = window.location.origin + '/';    
+   var apiUrl = appUrl + 'api/getUser';
    
 //get user and load search results from saved search
    $.get(apiUrl, function(data){
