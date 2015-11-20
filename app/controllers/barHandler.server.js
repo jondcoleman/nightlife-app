@@ -1,6 +1,5 @@
 'use strict';
 
-var Moment = require('moment');
 var Bar = require('../models/bars.js');
 var Yelp = require('./yelp.js');
 
