@@ -57,7 +57,6 @@ function BarHandler () {
         var yelpCall = function(allBars){
             Yelp(location, function(body){
                 var businesses = JSON.parse(body).businesses;
-                
                 //add visitor count
                 businesses.forEach(function(val, index, array){
                     array[index].visitorCount = 0;
