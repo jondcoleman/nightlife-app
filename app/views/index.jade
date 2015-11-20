@@ -14,12 +14,20 @@ block headerContent
 block content
     .container
         .row
+            
             a(name='GetStarted')
             form#location-search
                 .input-field.col.m6.offset-m3.location-search
                     input#location-input.validate(placeholder='Location', type='text', required='', aria-required='true' name='location')
                     button#location-search-btn.btn.search-btn(type='submit', value='Submit') Search
         .row.bars-con
+            .spinner.hidden
+                p Loading
+                .rect1
+                .rect2
+                .rect3
+                .rect4
+                .rect5
             #bars.bars
         
         

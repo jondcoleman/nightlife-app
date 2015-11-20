@@ -39,6 +39,8 @@ $(document).ready(function(){
             url: appUrl + 'api/yelp/' + location,
             type: 'GET',
             dataType: 'html',
+            beforeSend: function() {$('.spinner').toggleClass("hidden")},
+            complete: function() {$('.spinner').toggleClass("hidden")},
             success: function(data){
                 $('#bars').html(data);
             }
