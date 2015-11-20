@@ -64,6 +64,7 @@ function request_yelp(location, callback) {
 
   /* Then we use request to send make the API Request */
   request(apiURL, function(error, response, body){
+    console.log(body);
     callback(body);
   });
 
